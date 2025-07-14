@@ -1,9 +1,9 @@
 import { Text, View } from "react-native";
 
-export default function DiscoverScreen() {
+export default function WatchListScreen() {
   return (
     <View>
-      <Text>Discover screen</Text>
+      <Text>Watchlist screen</Text>
     </View>
   );
 }
