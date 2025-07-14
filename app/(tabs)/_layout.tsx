@@ -44,7 +44,7 @@ export default function TabLayout() {
         options={{
           title: "Discover",
           tabBarIcon: ({ color }) => (
-            <Ionicons name={"home"} size={28} color={color} />
+            <Ionicons name={"videocam"} size={28} color={color} />
           ),
         }}
       />

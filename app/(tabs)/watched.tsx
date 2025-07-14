@@ -1,9 +1,20 @@
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 export default function WatchedScreen() {
   return (
-    <View>
-      <Text>Watched screen</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Watched</Text>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 25,
+    paddingVertical: 20,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: "bold",
+  },
+});
