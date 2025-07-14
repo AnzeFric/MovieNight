@@ -1,6 +1,6 @@
 export interface MovieInfo {
   name: string;
-  length?: number;
+  length?: number; //min
   rating?: number;
   year?: number;
   genres?: Array<Genre>;

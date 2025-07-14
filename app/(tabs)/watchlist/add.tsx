@@ -1,4 +1,5 @@
 import CustomText from "@/components/global/CustomText";
+import AddMovieForm from "@/components/watchlist/AddMovieForm";
 import { MovieInfo } from "@/interfaces/movie";
 import { useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
@@ -25,6 +26,7 @@ export default function AddMovie() {
       <CustomText type={"lTitle"} bold>
         Add a movie
       </CustomText>
+      <AddMovieForm setMovie={setMovie} />
     </View>
   );
 }
@@ -34,5 +36,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
     paddingVertical: 20,
     flex: 1,
+    gap: 20,
   },
 });
