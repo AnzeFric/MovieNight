@@ -1,7 +1,25 @@
 import CustomText from "@/components/global/CustomText";
+import { MovieInfo } from "@/interfaces/movie";
+import { useFocusEffect } from "expo-router";
+import { useCallback, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
+const defaultMovieInfo: MovieInfo = {
+  name: "",
+};
+
+// TODO?: Vpišeš link pa ti vzame podatke avtomatsko
 export default function AddMovie() {
+  const [movie, setMovie] = useState<MovieInfo>(defaultMovieInfo);
+
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        setMovie(defaultMovieInfo);
+      };
+    }, [])
+  );
+
   return (
     <View style={styles.container}>
       <CustomText type={"lTitle"} bold>
