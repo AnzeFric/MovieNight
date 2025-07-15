@@ -26,10 +26,8 @@ export default function GenrePicker({ setGenres }: Props) {
   }, [newGenre]);
 
   const addGenre = () => {
-    setGenres((prev) => ({
-      ...prev,
-      newGenre,
-    }));
+    if (newGenre === "") return;
+    setGenres((prev) => [...prev, newGenre]);
     setNewGenre("");
   };
 

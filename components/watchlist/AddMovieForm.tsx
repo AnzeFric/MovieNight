@@ -3,6 +3,7 @@ import { Genre, MovieInfo } from "@/interfaces/movie";
 import { Dispatch, SetStateAction, useCallback, useState } from "react";
 import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import CustomText from "../global/CustomText";
+import GenreDisplay from "./ui/GenreDisplay";
 import GenrePicker from "./ui/GenrePicker";
 
 interface Props {
@@ -93,6 +94,7 @@ export default function AddMovieForm({ setMovie }: Props) {
       />
 
       <GenrePicker setGenres={setGenres} />
+      <GenreDisplay genres={genres} setGenres={setGenres} />
 
       <TouchableOpacity style={styles.button} onPress={addMovie}>
         <CustomText type={"normal"} bold>
