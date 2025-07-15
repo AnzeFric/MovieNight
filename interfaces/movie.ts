@@ -5,7 +5,6 @@ export interface MovieInfo {
   year?: number;
   genres?: Array<Genre>;
   director?: Person;
-  cast?: Array<Person>;
   description?: string;
 }
 
@@ -13,6 +12,7 @@ export interface Person {
   firstname: string;
   lastname: string;
 }
+
 export const genresArray = [
   "action",
   "adventure",

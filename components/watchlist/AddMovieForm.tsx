@@ -1,10 +1,11 @@
 import { Colors } from "@/constants/Colors";
-import { Genre, MovieInfo } from "@/interfaces/movie";
+import { Genre, MovieInfo, Person } from "@/interfaces/movie";
 import { Dispatch, SetStateAction, useCallback, useState } from "react";
 import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import CustomText from "../global/CustomText";
-import GenreDisplay from "./ui/GenreDisplay";
-import GenrePicker from "./ui/GenrePicker";
+import GenreDisplay from "./genre/GenreDisplay";
+import GenrePicker from "./genre/GenrePicker";
+import PersonInput from "./people/PersonInput";
 
 interface Props {
   setMovie: Dispatch<SetStateAction<MovieInfo>>;
@@ -16,8 +17,7 @@ export default function AddMovieForm({ setMovie }: Props) {
   const [lengthMinutes, setLengthMinutes] = useState("");
   const [year, setYear] = useState("");
   const [genres, setGenres] = useState<Array<Genre>>([]);
-  const [director, setDirector] = useState();
-  const [cast, setCast] = useState();
+  const [director, setDirector] = useState<Person>();
   const [description, setDescription] = useState("");
 
   useCallback(() => {
@@ -27,19 +27,9 @@ export default function AddMovieForm({ setMovie }: Props) {
       year: parseInt(year),
       genres: genres,
       director: director,
-      cast: cast,
       description: description,
     });
-  }, [
-    name,
-    lengthHours,
-    lengthMinutes,
-    year,
-    genres,
-    director,
-    cast,
-    description,
-  ]);
+  }, [name, lengthHours, lengthMinutes, year, genres, director, description]);
 
   const addMovie = () => {};
 
@@ -95,6 +85,9 @@ export default function AddMovieForm({ setMovie }: Props) {
 
       <GenrePicker setGenres={setGenres} />
       <GenreDisplay genres={genres} setGenres={setGenres} />
+
+      <CustomText type={"normal"}>Director</CustomText>
+      <PersonInput setPerson={setDirector} />
 
       <TouchableOpacity style={styles.button} onPress={addMovie}>
         <CustomText type={"normal"} bold>
