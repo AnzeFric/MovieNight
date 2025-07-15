@@ -1,8 +1,9 @@
 import { Colors } from "@/constants/Colors";
-import { MovieInfo } from "@/interfaces/movie";
+import { Genre, MovieInfo } from "@/interfaces/movie";
 import { Dispatch, SetStateAction, useCallback, useState } from "react";
 import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import CustomText from "../global/CustomText";
+import GenrePicker from "./ui/GenrePicker";
 
 interface Props {
   setMovie: Dispatch<SetStateAction<MovieInfo>>;
@@ -13,7 +14,7 @@ export default function AddMovieForm({ setMovie }: Props) {
   const [lengthHours, setLengthHours] = useState("");
   const [lengthMinutes, setLengthMinutes] = useState("");
   const [year, setYear] = useState("");
-  const [genres, setGenres] = useState([]);
+  const [genres, setGenres] = useState<Array<Genre>>([]);
   const [director, setDirector] = useState();
   const [cast, setCast] = useState();
   const [description, setDescription] = useState("");
@@ -46,25 +47,25 @@ export default function AddMovieForm({ setMovie }: Props) {
       <TextInput
         style={styles.input}
         placeholderTextColor={Colors.dark.secondaryText}
-        placeholder={"Ime in priimek"}
+        placeholder={"Movie name"}
         value={name}
         onChangeText={setName}
         autoCapitalize={"words"}
       />
       <View style={styles.twoOptionsContainer}>
         <TextInput
-          style={styles.input}
+          style={[styles.input, { flex: 1 }]}
           placeholderTextColor={Colors.dark.secondaryText}
-          placeholder={"Dolžina(ure)"}
+          placeholder={"Length(h)"}
           value={lengthHours}
           onChangeText={setLengthHours}
           autoCapitalize={"none"}
           keyboardType={"number-pad"}
         />
         <TextInput
-          style={styles.input}
+          style={[styles.input, { flex: 1 }]}
           placeholderTextColor={Colors.dark.secondaryText}
-          placeholder={"Dolžina(min)"}
+          placeholder={"Length(min)"}
           value={lengthMinutes}
           onChangeText={setLengthMinutes}
           autoCapitalize={"none"}
@@ -74,25 +75,28 @@ export default function AddMovieForm({ setMovie }: Props) {
       <TextInput
         style={styles.input}
         placeholderTextColor={Colors.dark.secondaryText}
-        placeholder={"Leto izdaje"}
+        placeholder={"Release year"}
         value={year}
         onChangeText={setYear}
         autoCapitalize={"words"}
         keyboardType={"number-pad"}
       />
       <TextInput
-        style={[styles.input, { height: 130, textAlignVertical: "bottom" }]}
+        style={styles.largeInput}
         placeholderTextColor={Colors.dark.secondaryText}
-        placeholder={"Opis"}
+        placeholder={"Description"}
         value={description}
         onChangeText={setDescription}
         autoCapitalize={"sentences"}
-        numberOfLines={3}
+        numberOfLines={5}
         multiline
       />
+
+      <GenrePicker setGenres={setGenres} />
+
       <TouchableOpacity style={styles.button} onPress={addMovie}>
         <CustomText type={"normal"} bold>
-          Dodaj
+          Add
         </CustomText>
       </TouchableOpacity>
     </View>
@@ -102,6 +106,16 @@ export default function AddMovieForm({ setMovie }: Props) {
 const styles = StyleSheet.create({
   input: {
     height: 50,
+    fontSize: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.light.inactiveBorder,
+    marginBottom: 15,
+    paddingVertical: 8,
+    color: "#ffffff",
+  },
+  largeInput: {
+    height: 130,
+    textAlignVertical: "bottom",
     fontSize: 16,
     borderBottomWidth: 1,
     borderBottomColor: Colors.light.inactiveBorder,

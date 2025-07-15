@@ -3,7 +3,7 @@ import AddMovieForm from "@/components/watchlist/AddMovieForm";
 import { MovieInfo } from "@/interfaces/movie";
 import { useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 
 const defaultMovieInfo: MovieInfo = {
   name: "",
@@ -22,12 +22,12 @@ export default function AddMovie() {
   );
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <CustomText type={"lTitle"} bold>
         Add a movie
       </CustomText>
       <AddMovieForm setMovie={setMovie} />
-    </View>
+    </ScrollView>
   );
 }
 
@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 25,
     paddingVertical: 20,
-    flex: 1,
     gap: 20,
   },
 });
