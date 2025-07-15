@@ -18,6 +18,7 @@ interface Props {
 export default function GenrePicker({ setGenres }: Props) {
   const [newGenre, setNewGenre] = useState("");
   const [dropDownVisible, setDropDownVisible] = useState(false);
+  const [genrePicked, setGenrePicked] = useState(false);
 
   const filteredGenres = useMemo(() => {
     return genresArray.filter((genre) =>
@@ -27,8 +28,20 @@ export default function GenrePicker({ setGenres }: Props) {
 
   const addGenre = () => {
     if (newGenre === "") return;
+    setGenrePicked(false);
+
     setGenres((prev) => [...prev, newGenre]);
     setNewGenre("");
+  };
+
+  const setGenre = (genre: string) => {
+    setGenrePicked(true);
+    setNewGenre(genre);
+  };
+
+  const changeText = (value: string) => {
+    setGenrePicked(false);
+    setNewGenre(value);
   };
 
   return (
@@ -39,7 +52,7 @@ export default function GenrePicker({ setGenres }: Props) {
           placeholderTextColor={Colors.dark.secondaryText}
           placeholder={"Genre"}
           value={newGenre}
-          onChangeText={setNewGenre}
+          onChangeText={(value) => changeText(value)}
           autoCapitalize={"none"}
           onFocus={() => setDropDownVisible(true)}
           onBlur={() => setDropDownVisible(false)}
@@ -47,8 +60,8 @@ export default function GenrePicker({ setGenres }: Props) {
         <Ionicons
           name={"checkmark-circle"}
           size={28}
-          onPress={addGenre}
-          color={Colors.dark.accepted}
+          onPress={genrePicked ? addGenre : () => {}}
+          color={genrePicked ? Colors.dark.accepted : Colors.dark.secondaryText}
           style={{ paddingHorizontal: 10 }}
         />
       </View>
@@ -64,7 +77,7 @@ export default function GenrePicker({ setGenres }: Props) {
           {filteredGenres.map((item, index) => (
             <TouchableOpacity
               style={styles.option}
-              onPress={() => setNewGenre(item)}
+              onPress={() => setGenre(item)}
               key={index}
             >
               <CustomText type={"small"}>{item}</CustomText>
