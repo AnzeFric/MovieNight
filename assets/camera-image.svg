@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="videocam-icon">
+  <defs>
+    <!-- Modern gradient for the camera body -->
+    <linearGradient id="cameraGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Gradient for the lens section -->
+    <linearGradient id="lensGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f093fb;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f5576c;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Subtle shadow filter -->
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="2" dy="4" stdDeviation="8" flood-color="#000" flood-opacity="0.2"/>
+    </filter>
+    
+    <!-- Glow effect -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background circle for better tap target -->
+  <circle cx="256" cy="256" r="240" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+  
+  <!-- Camera body with rounded corners and gradient -->
+  <path d="M84 128h184.48c35.3 0 63.52 28.7 63.52 64v128c0 35.3-28.22 64-63.52 64H84c-35.3 0-64-28.7-64-64V192c0-35.3 28.7-64 64-64z" 
+        fill="url(#cameraGradient)" 
+        filter="url(#shadow)"
+        rx="24" ry="24"/>
+  
+  <!-- Lens section with modern styling -->
+  <path d="M374.79 308.78L457.5 367c13.25 9.33 32.5 1.16 32.5-14.62V159.62c0-15.78-19.25-23.95-32.5-14.62l-82.71 88.22c-8.66" 
+        fill="url(#lensGradient)" 
+        filter="url(#glow)"/>
+  
+  <!-- Lens highlight for 3D effect -->
+  <ellipse cx="430" cy="200" rx="8" ry="12" fill="rgba(255,255,255,0.4)" opacity="0.8"/>
+  
+  <!-- Recording indicator dot -->
+  <circle cx="300" cy="160" r="8" fill="#ff4757">
+    <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Lens reflection -->
+  <ellipse cx="420" cy="180" rx="15" ry="25" fill="rgba(255,255,255,0.2)" opacity="0.6"/>
+  
+  <style>
+    .videocam-icon {
+      filter: drop-shadow(0 8px 32px rgba(102, 126, 234, 0.3));
+    }
+    
+    .videocam-icon:hover {
+      transform: scale(1.05);
+      transition: transform 0.3s ease;
+    }
+  </style>
+</svg>
