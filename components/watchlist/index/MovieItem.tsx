@@ -1,13 +1,18 @@
 import CustomText from "@/components/global/CustomText";
 import { Colors } from "@/constants/Colors";
+import { useMovies } from "@/hooks/useMovies";
 import { MovieInfo } from "@/interfaces/movie";
-import { StyleSheet, View } from "react-native";
+import useMovieStore from "@/stores/useMovieStore";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 interface Props {
   movie: MovieInfo;
 }
 
 export default function MovieItem({ movie }: Props) {
+  const { deleteMovie } = useMovies();
+  const { setMovies } = useMovieStore();
+
   const getReleaseYear = (year: number | null) => {
     if (!year) return;
     return `, ${year}`;
@@ -26,8 +31,10 @@ export default function MovieItem({ movie }: Props) {
     return str;
   };
 
+  const handleDeleteMovie = async () => {};
+
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onLongPress={handleDeleteMovie}>
       <View style={styles.title}>
         <CustomText type={"normal"} bold>
           {movie.name}
@@ -42,7 +49,7 @@ export default function MovieItem({ movie }: Props) {
           </View>
         ))}
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 

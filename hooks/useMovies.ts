@@ -31,8 +31,24 @@ export function useMovies() {
     }
   };
 
+  const deleteMovie = async (movieUuid: string) => {
+    try {
+      await MovieService.deleteMovie(movieUuid);
+      const movies = await fetchMovies();
+
+      return movies;
+    } catch (error) {
+      console.error("Error while deleting data: ", error);
+      Alert.alert(
+        "Error",
+        "An error occured while deleting data. Try again later."
+      );
+    }
+  };
+
   return {
     fetchMovies,
     createMovie,
+    deleteMovie,
   };
 }
