@@ -17,4 +17,5 @@ export default class Movie extends Model {
   @json("director", (json) => json) director!: Person | null;
 
   @field("description") description!: string | null;
+  @field("picker") picker!: string;
 }

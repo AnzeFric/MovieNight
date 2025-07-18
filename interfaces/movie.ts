@@ -7,6 +7,7 @@ export interface MovieInfo {
   genres: Array<Genre> | null;
   director: Person | null;
   description: string | null;
+  picker: string; // Who chose the movie
 }
 
 export interface Person {

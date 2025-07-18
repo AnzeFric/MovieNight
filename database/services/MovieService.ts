@@ -14,6 +14,7 @@ export class MovieService {
         movie.genres = movieData.genres;
         movie.director = movieData.director;
         movie.description = movieData.description;
+        movie.picker = movieData.picker;
       });
 
       return movie;
@@ -34,6 +35,7 @@ export class MovieService {
           genres: movieRecord.genres,
           director: movieRecord.director,
           description: movieRecord.description,
+          picker: movieRecord.picker,
         };
         return movie;
       })

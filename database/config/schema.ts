@@ -14,6 +14,7 @@ export default appSchema({
         { name: "genres", type: "string", isOptional: true },
         { name: "director", type: "string", isOptional: true },
         { name: "description", type: "string", isOptional: true },
+        { name: "picker", type: "string" },
       ],
     }),
   ],
