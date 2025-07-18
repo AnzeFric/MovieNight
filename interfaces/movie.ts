@@ -1,11 +1,12 @@
 export interface MovieInfo {
+  uuid: string;
   name: string;
-  length?: number; // min
-  rating?: number;
-  year?: number;
-  genres?: Array<Genre>;
-  director?: Person;
-  description?: string;
+  length: number | null; // min
+  rating: number | null;
+  year: number | null;
+  genres: Array<Genre> | null;
+  director: Person | null;
+  description: string | null;
 }
 
 export interface Person {

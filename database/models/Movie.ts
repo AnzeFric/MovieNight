@@ -9,9 +9,9 @@ export default class Movie extends Model {
 
   @field("uuid") uuid!: string;
   @field("name") name!: string;
-  @field("length") length!: string; // min
-  @field("rating") rating!: string | null;
-  @field("year") year!: string | null;
+  @field("length") length!: number | null; // min
+  @field("rating") rating!: number | null;
+  @field("year") year!: number | null;
 
   @json("genres", (json) => json) genres!: Array<Genre> | null;
   @json("director", (json) => json) director!: Person | null;
