@@ -11,7 +11,14 @@ import {
 } from "react-native";
 
 const defaultMovieInfo: MovieInfo = {
+  uuid: "",
   name: "",
+  length: null,
+  rating: null,
+  year: null,
+  genres: null,
+  director: null,
+  description: null,
 };
 
 // TODO?: Vpišeš link pa ti vzame podatke avtomatsko

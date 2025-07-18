@@ -17,13 +17,15 @@ export default function AddMovieForm({ setMovie }: Props) {
   const [lengthMinutes, setLengthMinutes] = useState("");
   const [year, setYear] = useState("");
   const [genres, setGenres] = useState<Array<Genre>>([]);
-  const [director, setDirector] = useState<Person>();
+  const [director, setDirector] = useState<Person | null>(null);
   const [description, setDescription] = useState("");
 
   useCallback(() => {
     setMovie({
+      uuid: "",
       name: name,
       length: parseInt(lengthHours) * 60 + parseInt(lengthMinutes),
+      rating: 0,
       year: parseInt(year),
       genres: genres,
       director: director,

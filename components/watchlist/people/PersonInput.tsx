@@ -11,7 +11,7 @@ import { StyleSheet, TextInput, View } from "react-native";
 
 interface Props {
   person?: Person;
-  setPerson: Dispatch<SetStateAction<Person | undefined>>;
+  setPerson: Dispatch<SetStateAction<Person | null>>;
 }
 
 export default function PersonInput({ person, setPerson }: Props) {
