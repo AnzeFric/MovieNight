@@ -1,17 +1,18 @@
 import { Colors } from "@/constants/Colors";
+import { useMovies } from "@/hooks/useMovies";
 import { Genre, MovieInfo, Person } from "@/interfaces/movie";
-import { Dispatch, SetStateAction, useCallback, useState } from "react";
+import { useFocusEffect } from "expo-router";
+import { useCallback, useState } from "react";
 import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import uuid from "react-native-uuid";
 import CustomText from "../global/CustomText";
 import GenreDisplay from "./genre/GenreDisplay";
 import GenrePicker from "./genre/GenrePicker";
 import PersonInput from "./people/PersonInput";
 
-interface Props {
-  setMovie: Dispatch<SetStateAction<MovieInfo>>;
-}
+export default function AddMovieForm() {
+  const { createMovie } = useMovies();
 
-export default function AddMovieForm({ setMovie }: Props) {
   const [name, setName] = useState("");
   const [lengthHours, setLengthHours] = useState("");
   const [lengthMinutes, setLengthMinutes] = useState("");
@@ -20,9 +21,23 @@ export default function AddMovieForm({ setMovie }: Props) {
   const [director, setDirector] = useState<Person | null>(null);
   const [description, setDescription] = useState("");
 
-  useCallback(() => {
-    setMovie({
-      uuid: "",
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        setName("");
+        setLengthHours("");
+        setLengthMinutes("");
+        setYear("");
+        setGenres([]);
+        setDirector(null);
+        setDescription("");
+      };
+    }, [])
+  );
+
+  const addMovie = async () => {
+    const newMovie: MovieInfo = {
+      uuid: uuid.v4(),
       name: name,
       length: parseInt(lengthHours) * 60 + parseInt(lengthMinutes),
       rating: 0,
@@ -30,10 +45,10 @@ export default function AddMovieForm({ setMovie }: Props) {
       genres: genres,
       director: director,
       description: description,
-    });
-  }, [name, lengthHours, lengthMinutes, year, genres, director, description]);
+    };
 
-  const addMovie = () => {};
+    await createMovie(newMovie);
+  };
 
   return (
     <View>

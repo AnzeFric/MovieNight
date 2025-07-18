@@ -1,8 +1,5 @@
 import CustomText from "@/components/global/CustomText";
 import AddMovieForm from "@/components/watchlist/AddMovieForm";
-import { MovieInfo } from "@/interfaces/movie";
-import { useFocusEffect } from "expo-router";
-import { useCallback, useState } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -10,32 +7,11 @@ import {
   StyleSheet,
 } from "react-native";
 
-const defaultMovieInfo: MovieInfo = {
-  uuid: "",
-  name: "",
-  length: null,
-  rating: null,
-  year: null,
-  genres: null,
-  director: null,
-  description: null,
-};
-
 // TODO?: Vpišeš link pa ti vzame podatke avtomatsko
 export default function AddMovie() {
-  const [movie, setMovie] = useState<MovieInfo>(defaultMovieInfo);
-
-  useFocusEffect(
-    useCallback(() => {
-      return () => {
-        setMovie(defaultMovieInfo);
-      };
-    }, [])
-  );
-
   return (
     <KeyboardAvoidingView
-      style={styles.keyboardContainer}
+      style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={Platform.OS === "ios" ? 150 : 50}
     >
@@ -47,16 +23,13 @@ export default function AddMovie() {
         <CustomText type={"lTitle"} bold>
           Add a movie
         </CustomText>
-        <AddMovieForm setMovie={setMovie} />
+        <AddMovieForm />
       </ScrollView>
     </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
-  keyboardContainer: {
-    flex: 1,
-  },
   container: {
     paddingHorizontal: 25,
     paddingVertical: 20,
