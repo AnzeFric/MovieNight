@@ -3,7 +3,7 @@ import { MovieInfo } from "@/interfaces/movie";
 import Movie from "../models/Movie";
 
 export class MovieService {
-  static async createMovie(movieData: MovieInfo): Promise<string> {
+  static async createMovie(movieData: MovieInfo): Promise<MovieInfo> {
     return await database.write(async () => {
       const movie = await database.get<Movie>("movies").create((movie) => {
         movie.uuid = movieData.uuid;
@@ -16,7 +16,7 @@ export class MovieService {
         movie.description = movieData.description;
       });
 
-      return movie.id;
+      return movie;
     });
   }
 

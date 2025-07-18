@@ -1,17 +1,19 @@
 import { Colors } from "@/constants/Colors";
 import { useMovies } from "@/hooks/useMovies";
 import { Genre, MovieInfo, Person } from "@/interfaces/movie";
-import { useFocusEffect } from "expo-router";
+import useMovieStore from "@/stores/useMovieStore";
+import { router, useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
 import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import uuid from "react-native-uuid";
-import CustomText from "../global/CustomText";
+import CustomText from "../../global/CustomText";
 import GenreDisplay from "./genre/GenreDisplay";
 import GenrePicker from "./genre/GenrePicker";
 import PersonInput from "./people/PersonInput";
 
 export default function AddMovieForm() {
   const { createMovie } = useMovies();
+  const { setMovies } = useMovieStore();
 
   const [name, setName] = useState("");
   const [lengthHours, setLengthHours] = useState("");
@@ -47,7 +49,10 @@ export default function AddMovieForm() {
       description: description,
     };
 
-    await createMovie(newMovie);
+    const updatedMovies = await createMovie(newMovie);
+    setMovies(updatedMovies ? updatedMovies : []);
+
+    router.back();
   };
 
   return (

@@ -1,5 +1,5 @@
 import CustomText from "@/components/global/CustomText";
-import AddMovieForm from "@/components/watchlist/AddMovieForm";
+import AddMovieForm from "@/components/watchlist/add/AddMovieForm";
 import {
   KeyboardAvoidingView,
   Platform,

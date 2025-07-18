@@ -18,8 +18,10 @@ export function useMovies() {
 
   const createMovie = async (movieData: MovieInfo) => {
     try {
-      const movieId = await MovieService.createMovie(movieData);
-      return movieId ? true : false;
+      await MovieService.createMovie(movieData);
+      const movies = await fetchMovies();
+
+      return movies;
     } catch (error) {
       console.error("Error while saving data: ", error);
       Alert.alert(
