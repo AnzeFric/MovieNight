@@ -10,11 +10,11 @@ import { useEffect, useRef, useState } from "react";
 import { Animated, StyleSheet, TouchableOpacity, View } from "react-native";
 
 export default function WatchListScreen() {
-  const { fetchMovies } = useMovies();
+  const { fetchMovies, deleteMovies } = useMovies();
   const { movies, setMovies } = useMovieStore();
 
   const [showActionBar, setShowActionBar] = useState(false);
-  const [selectedMovies, setSelectedMovies] = useState<Array<number>>([]);
+  const [selectedMovies, setSelectedMovies] = useState<Array<string>>([]);
 
   const actionBarTranslateY = useRef(new Animated.Value(100)).current;
   const actionBarOpacity = useRef(new Animated.Value(0)).current;
@@ -24,22 +24,29 @@ export default function WatchListScreen() {
     router.push("/(tabs)/watchlist/add");
   };
 
-  const onPress = (index: number) => {
+  const onPress = (uuid: string) => {
     setSelectedMovies((prev) =>
-      prev.includes(index)
-        ? prev.filter((selected) => selected !== index)
-        : [...prev, index]
+      prev.includes(uuid)
+        ? prev.filter((selected) => selected !== uuid)
+        : [...prev, uuid]
     );
   };
 
-  const onLongPress = (index: number) => {
+  const onLongPress = (uuid: string) => {
     setShowActionBar(true);
-    onPress(index);
+    onPress(uuid);
   };
 
   const cancelActionBar = () => {
     setSelectedMovies([]);
     setShowActionBar(false);
+  };
+
+  const deleteActionBar = async () => {
+    const updatedMovies = await deleteMovies(selectedMovies);
+    if (updatedMovies) {
+      setMovies(updatedMovies);
+    }
   };
 
   useEffect(() => {
@@ -105,9 +112,9 @@ export default function WatchListScreen() {
             <MovieItem
               movie={movie}
               showActionBar={showActionBar}
-              selected={selectedMovies.includes(index)}
-              onPress={() => onPress(index)}
-              onLongPress={() => onLongPress(index)}
+              selected={selectedMovies.includes(movie.uuid)}
+              onPress={() => onPress(movie.uuid)}
+              onLongPress={() => onLongPress(movie.uuid)}
               key={index}
             />
           ))}
@@ -138,7 +145,7 @@ export default function WatchListScreen() {
           />
           <CustomText type="small">Watched</CustomText>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.actionItem} onPress={() => {}}>
+        <TouchableOpacity style={styles.actionItem} onPress={deleteActionBar}>
           <Ionicons
             name={"trash-outline"}
             size={20}

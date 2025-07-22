@@ -1,5 +1,6 @@
 import { database } from "@/database/index";
 import { MovieInfo } from "@/interfaces/movie";
+import { Q } from "@nozbe/watermelondb";
 import Movie from "../models/Movie";
 
 export class MovieService {
@@ -46,8 +47,12 @@ export class MovieService {
 
   static async deleteMovie(movieUuid: string): Promise<void> {
     await database.write(async () => {
-      const movie = await database.get<Movie>("movies").find(movieUuid);
-      await movie.destroyPermanently();
+      const movies = await database
+        .get<Movie>("movies")
+        .query(Q.where("uuid", movieUuid))
+        .fetch();
+
+      await movies[0].destroyPermanently();
     });
   }
 }

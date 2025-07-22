@@ -31,9 +31,13 @@ export function useMovies() {
     }
   };
 
-  const deleteMovie = async (movieUuid: string) => {
+  const deleteMovies = async (moviesUuid: Array<string>) => {
     try {
-      await MovieService.deleteMovie(movieUuid);
+      await Promise.all(
+        moviesUuid.map(async (uuid) => {
+          await MovieService.deleteMovie(uuid);
+        })
+      );
       const movies = await fetchMovies();
 
       return movies;
@@ -49,6 +53,6 @@ export function useMovies() {
   return {
     fetchMovies,
     createMovie,
-    deleteMovie,
+    deleteMovies,
   };
 }
