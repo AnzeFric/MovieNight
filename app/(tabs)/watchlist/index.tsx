@@ -47,6 +47,8 @@ export default function WatchListScreen() {
     if (updatedMovies) {
       setMovies(updatedMovies);
     }
+    setSelectedMovies([]);
+    setShowActionBar(false);
   };
 
   useEffect(() => {
