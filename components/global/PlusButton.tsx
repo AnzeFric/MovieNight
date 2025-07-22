@@ -3,17 +3,18 @@ import { Ionicons } from "@expo/vector-icons";
 import { StyleSheet, TouchableOpacity } from "react-native";
 
 interface Props {
+  enabled: boolean;
   onPress: () => void;
 }
 
-export default function PlusButton({ onPress }: Props) {
+export default function PlusButton({ enabled, onPress }: Props) {
   return (
     <TouchableOpacity
       style={[
         styles.fixedAddButton,
         { backgroundColor: Colors.dark.specialBlue },
       ]}
-      onPress={onPress}
+      onPress={enabled ? onPress : () => {}}
     >
       <Ionicons
         name={"add"}

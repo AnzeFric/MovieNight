@@ -1,47 +1,33 @@
 import CustomText from "@/components/global/CustomText";
 import { Colors } from "@/constants/Colors";
+import { formatLength, formatReleaseYear } from "@/constants/Utils";
 import { useMovies } from "@/hooks/useMovies";
 import { MovieInfo } from "@/interfaces/movie";
 import useMovieStore from "@/stores/useMovieStore";
+import { Dispatch, SetStateAction } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 interface Props {
   movie: MovieInfo;
+  setShowActionBar: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function MovieItem({ movie }: Props) {
+export default function MovieItem({ movie, setShowActionBar }: Props) {
   const { deleteMovie } = useMovies();
   const { setMovies } = useMovieStore();
 
-  const getReleaseYear = (year: number | null) => {
-    if (!year) return;
-    return `, ${year}`;
-  };
-
-  const getLength = (length: number | null) => {
-    if (!length) return;
-
-    if (length < 60) {
-      var str = `00:${length.toString().padStart(2, "0")}`;
-    } else {
-      const lengthH = Math.floor(length / 60);
-      const lengthMin = Math.abs(length - 60 * Number(lengthH)).toString();
-      var str = `${lengthH.toString().padStart(2, "0")}:${lengthMin.padStart(2, "0")}`;
-    }
-    return str;
-  };
-
-  const handleDeleteMovie = async () => {};
-
   return (
-    <TouchableOpacity style={styles.container} onLongPress={handleDeleteMovie}>
+    <TouchableOpacity
+      style={styles.container}
+      onLongPress={() => setShowActionBar(true)}
+    >
       <View style={styles.title}>
         <CustomText type={"normal"} bold>
           {movie.name}
         </CustomText>
-        <CustomText type={"small"}>{getReleaseYear(movie.year)}</CustomText>
+        <CustomText type={"small"}>{formatReleaseYear(movie.year)}</CustomText>
       </View>
-      <CustomText type={"small"}>{getLength(movie.length)}</CustomText>
+      <CustomText type={"small"}>{formatLength(movie.length)}</CustomText>
       <View style={styles.genreContainer}>
         {movie.genres?.map((genre, index) => (
           <View style={styles.genre} key={index}>
