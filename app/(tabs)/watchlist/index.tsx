@@ -7,8 +7,15 @@ import useMovieStore from "@/stores/useMovieStore";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useEffect, useRef, useState } from "react";
-import { Animated, StyleSheet, TouchableOpacity, View } from "react-native";
+import {
+  Animated,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
+// TODO: Filtriranje in search bar
 export default function WatchListScreen() {
   const { fetchMovies, deleteMovies } = useMovies();
   const { movies, setMovies } = useMovieStore();
@@ -105,7 +112,12 @@ export default function WatchListScreen() {
 
   return (
     <>
-      <View style={styles.container}>
+      <ScrollView
+        contentContainerStyle={[
+          styles.container,
+          showActionBar && { paddingBottom: 80 },
+        ]}
+      >
         <CustomText type={"lTitle"} bold>
           Watchlist
         </CustomText>
@@ -121,7 +133,7 @@ export default function WatchListScreen() {
             />
           ))}
         </View>
-      </View>
+      </ScrollView>
       <Animated.View
         style={{
           transform: [{ scale: plusButtonScale }],
@@ -172,8 +184,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 25,
     paddingVertical: 20,
-    flex: 1,
-    gap: 15,
+    gap: 30,
   },
   actionBar: {
     height: 64,

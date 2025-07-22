@@ -6,7 +6,7 @@ export const formatReleaseYear = (year: number | null) => {
 };
 
 export const formatLength = (length: number | null) => {
-  if (!length) return "";
+  if (!length) return "00:00";
 
   if (length < 60) {
     var str = `00:${length.toString().padStart(2, "0")}`;
