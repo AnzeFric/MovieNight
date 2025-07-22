@@ -66,7 +66,8 @@ export default function MovieItem({
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 10,
-    paddingHorizontal: 15,
+    paddingStart: 15,
+    paddingEnd: 35,
     borderRadius: 6,
     borderColor: Colors.dark.border,
     borderWidth: 0.5,
