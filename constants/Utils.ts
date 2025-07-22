@@ -1,5 +1,5 @@
 export const formatReleaseYear = (year: number | null) => {
-  if (!year) return;
+  if (!year) return "";
   return `, ${year}`;
 };
 

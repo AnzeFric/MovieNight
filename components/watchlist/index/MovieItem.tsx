@@ -39,15 +39,18 @@ export default function MovieItem({
         <Checkbox color={Colors.dark.specialBlue} value={selected} />
       )}
       <View>
-        <View style={styles.title}>
-          <CustomText type={"normal"} bold>
-            {movie.name}
-          </CustomText>
-          <CustomText type={"small"}>
-            {formatReleaseYear(movie.year)}
-          </CustomText>
-        </View>
+        <CustomText
+          type={"normal"}
+          bold
+          style={{
+            flexWrap: "wrap",
+          }}
+        >
+          {movie.name} {formatReleaseYear(movie.year)}
+        </CustomText>
+        <CustomText type={"small"}>{movie.picker}</CustomText>
         <CustomText type={"small"}>{formatLength(movie.length)}</CustomText>
+
         <View style={styles.genreContainer}>
           {movie.genres?.map((genre, index) => (
             <View style={styles.genre} key={index}>
@@ -71,10 +74,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 20,
-  },
-  title: {
-    flexDirection: "row",
-    alignItems: "flex-end",
   },
   genreContainer: {
     flexDirection: "row",

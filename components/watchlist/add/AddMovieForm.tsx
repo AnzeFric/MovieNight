@@ -57,7 +57,7 @@ export default function AddMovieForm() {
       genres: genres,
       director: director,
       description: description,
-      picker: picker ? person1 : person2,
+      picker: picker ? person2 : person1,
     };
 
     const updatedMovies = await createMovie(newMovie);
