@@ -14,9 +14,28 @@ export default function WatchListScreen() {
   const { movies, setMovies } = useMovieStore();
 
   const [showActionBar, setShowActionBar] = useState(false);
+  const [selectedMovies, setSelectedMovies] = useState<Array<number>>([]);
 
   const redirectToAddMovie = () => {
     router.push("/(tabs)/watchlist/add");
+  };
+
+  const onPress = (index: number) => {
+    setSelectedMovies((prev) =>
+      prev.includes(index)
+        ? prev.filter((selected) => selected !== index)
+        : [...prev, index]
+    );
+  };
+
+  const onLongPress = (index: number) => {
+    setShowActionBar(true);
+    onPress(index);
+  };
+
+  const cancelActionBar = () => {
+    setSelectedMovies([]);
+    setShowActionBar(false);
   };
 
   useEffect(() => {
@@ -37,7 +56,10 @@ export default function WatchListScreen() {
           {movies.map((movie, index) => (
             <MovieItem
               movie={movie}
-              setShowActionBar={setShowActionBar}
+              showActionBar={showActionBar}
+              selected={selectedMovies.includes(index)}
+              onPress={() => onPress(index)}
+              onLongPress={() => onLongPress(index)}
               key={index}
             />
           ))}
@@ -62,7 +84,7 @@ export default function WatchListScreen() {
             />
             <CustomText type="small">Delete</CustomText>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.actionItem} onPress={() => {}}>
+          <TouchableOpacity style={styles.actionItem} onPress={cancelActionBar}>
             <Ionicons
               name={"close-outline"}
               size={30}

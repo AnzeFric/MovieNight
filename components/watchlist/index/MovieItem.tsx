@@ -1,39 +1,59 @@
 import CustomText from "@/components/global/CustomText";
 import { Colors } from "@/constants/Colors";
 import { formatLength, formatReleaseYear } from "@/constants/Utils";
-import { useMovies } from "@/hooks/useMovies";
 import { MovieInfo } from "@/interfaces/movie";
-import useMovieStore from "@/stores/useMovieStore";
-import { Dispatch, SetStateAction } from "react";
+import Checkbox from "expo-checkbox";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 interface Props {
   movie: MovieInfo;
-  setShowActionBar: Dispatch<SetStateAction<boolean>>;
+  showActionBar?: boolean;
+  selected?: boolean;
+  onPress?: () => void;
+  onLongPress?: () => void;
 }
 
-export default function MovieItem({ movie, setShowActionBar }: Props) {
-  const { deleteMovie } = useMovies();
-  const { setMovies } = useMovieStore();
+export default function MovieItem({
+  movie,
+  showActionBar = false,
+  selected = false,
+  onPress = undefined,
+  onLongPress = undefined,
+}: Props) {
+  const handleOnPress = () => {
+    if (onPress && showActionBar) {
+      onPress();
+    } else {
+      // redirect to detail
+    }
+  };
 
   return (
     <TouchableOpacity
       style={styles.container}
-      onLongPress={() => setShowActionBar(true)}
+      onPress={handleOnPress}
+      onLongPress={onLongPress}
     >
-      <View style={styles.title}>
-        <CustomText type={"normal"} bold>
-          {movie.name}
-        </CustomText>
-        <CustomText type={"small"}>{formatReleaseYear(movie.year)}</CustomText>
-      </View>
-      <CustomText type={"small"}>{formatLength(movie.length)}</CustomText>
-      <View style={styles.genreContainer}>
-        {movie.genres?.map((genre, index) => (
-          <View style={styles.genre} key={index}>
-            <CustomText type={"extraSmall"}>{genre}</CustomText>
-          </View>
-        ))}
+      {showActionBar && (
+        <Checkbox color={Colors.dark.specialBlue} value={selected} />
+      )}
+      <View>
+        <View style={styles.title}>
+          <CustomText type={"normal"} bold>
+            {movie.name}
+          </CustomText>
+          <CustomText type={"small"}>
+            {formatReleaseYear(movie.year)}
+          </CustomText>
+        </View>
+        <CustomText type={"small"}>{formatLength(movie.length)}</CustomText>
+        <View style={styles.genreContainer}>
+          {movie.genres?.map((genre, index) => (
+            <View style={styles.genre} key={index}>
+              <CustomText type={"extraSmall"}>{genre}</CustomText>
+            </View>
+          ))}
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -47,6 +67,9 @@ const styles = StyleSheet.create({
     borderColor: Colors.dark.border,
     borderWidth: 0.5,
     backgroundColor: Colors.dark.secondaryBackground,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 20,
   },
   title: {
     flexDirection: "row",
