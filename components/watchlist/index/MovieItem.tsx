@@ -25,7 +25,12 @@ export default function MovieItem({
     if (onPress && showActionBar) {
       onPress();
     } else {
-      router.push("/(tabs)/watchlist/detail");
+      router.push({
+        pathname: "/(tabs)/watchlist/detail",
+        params: {
+          movie: JSON.stringify(movie),
+        },
+      });
     }
   };
 

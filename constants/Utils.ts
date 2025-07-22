@@ -1,10 +1,12 @@
+import { Person } from "@/interfaces/movie";
+
 export const formatReleaseYear = (year: number | null) => {
   if (!year) return "";
   return `, ${year}`;
 };
 
 export const formatLength = (length: number | null) => {
-  if (!length) return;
+  if (!length) return "";
 
   if (length < 60) {
     var str = `00:${length.toString().padStart(2, "0")}`;
@@ -14,4 +16,10 @@ export const formatLength = (length: number | null) => {
     var str = `${lengthH.toString().padStart(2, "0")}:${lengthMin.padStart(2, "0")}`;
   }
   return str;
+};
+
+export const formatPerson = (person: Person | null) => {
+  if (!person) return "";
+
+  return person.firstname + " " + person.lastname;
 };
