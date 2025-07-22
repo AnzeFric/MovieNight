@@ -88,6 +88,12 @@ export default function TabLayout() {
           href: null,
         }}
       />
+      <Tabs.Screen
+        name="watchlist/detail"
+        options={{
+          href: null,
+        }}
+      />
     </Tabs>
   );
 }

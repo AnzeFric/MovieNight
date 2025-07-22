@@ -3,6 +3,7 @@ import { Colors } from "@/constants/Colors";
 import { formatLength, formatReleaseYear } from "@/constants/Utils";
 import { MovieInfo } from "@/interfaces/movie";
 import Checkbox from "expo-checkbox";
+import { router } from "expo-router";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 interface Props {
@@ -24,7 +25,7 @@ export default function MovieItem({
     if (onPress && showActionBar) {
       onPress();
     } else {
-      // redirect to detail
+      router.push("/(tabs)/watchlist/detail");
     }
   };
 
