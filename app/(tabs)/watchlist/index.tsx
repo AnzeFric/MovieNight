@@ -17,8 +17,10 @@ import {
 
 // TODO: Filtriranje in search bar
 export default function WatchListScreen() {
-  const { fetchWatchlistMovies, deleteMovies } = useMovies();
-  const { watchlistMovies, setWatchlistMovies } = useMovieStore();
+  const { fetchWatchlistMovies, deleteMovies, setMoviesToWatched } =
+    useMovies();
+  const { watchlistMovies, setWatchlistMovies, setWatchedMovies } =
+    useMovieStore();
 
   const [showActionBar, setShowActionBar] = useState(false);
   const [selectedMovies, setSelectedMovies] = useState<Array<string>>([]);
@@ -51,9 +53,14 @@ export default function WatchListScreen() {
 
   const deleteActionBar = async () => {
     const updatedMovies = await deleteMovies(selectedMovies);
-    if (updatedMovies) {
-      setWatchlistMovies(updatedMovies);
-    }
+    setWatchlistMovies(updatedMovies ? updatedMovies : []);
+    setSelectedMovies([]);
+    setShowActionBar(false);
+  };
+
+  const watchedActionBar = async () => {
+    const watchedMovies = await setMoviesToWatched(selectedMovies);
+    setWatchedMovies(watchedMovies ? watchedMovies : []);
     setSelectedMovies([]);
     setShowActionBar(false);
   };
@@ -151,7 +158,7 @@ export default function WatchListScreen() {
         ]}
         pointerEvents={showActionBar ? "auto" : "none"}
       >
-        <TouchableOpacity style={styles.actionItem} onPress={() => {}}>
+        <TouchableOpacity style={styles.actionItem} onPress={watchedActionBar}>
           <Ionicons
             name={"checkmark"}
             size={20}

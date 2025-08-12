@@ -87,4 +87,17 @@ export class MovieService {
       await movies[0].destroyPermanently();
     });
   }
+
+  static async setWatched(movieUuid: string): Promise<void> {
+    await database.write(async () => {
+      const movies = await database
+        .get<Movie>("movies")
+        .query(Q.where("uuid", movieUuid))
+        .fetch();
+
+      await movies[0].update((movie) => {
+        movie.watched = true;
+      });
+    });
+  }
 }

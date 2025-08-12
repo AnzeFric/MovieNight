@@ -63,10 +63,33 @@ export function useMovies() {
     }
   };
 
+  const setMoviesToWatched = async (moviesUuid: Array<string>) => {
+    try {
+      await Promise.all(
+        moviesUuid.map(async (uuid) => {
+          await MovieService.setWatched(uuid);
+        })
+      );
+      const movies = await fetchWatchlistMovies();
+
+      return movies;
+    } catch (error) {
+      console.error(
+        "Error while updating watchlist movies to watched: ",
+        error
+      );
+      Alert.alert(
+        "Error",
+        "An error occured while updating watchlist movies to watched. Try again later."
+      );
+    }
+  };
+
   return {
     fetchWatchlistMovies,
     fetchWatchedMovies,
     createMovie,
     deleteMovies,
+    setMoviesToWatched,
   };
 }

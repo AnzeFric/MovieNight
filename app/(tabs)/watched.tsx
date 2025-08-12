@@ -1,13 +1,33 @@
 import CustomText from "@/components/global/CustomText";
-import { StyleSheet, View } from "react-native";
+import MovieItem from "@/components/watchlist/index/MovieItem";
+import { useMovies } from "@/hooks/useMovies";
+import useMovieStore from "@/stores/useMovieStore";
+import { useEffect } from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
 
 export default function WatchedScreen() {
+  const { watchedMovies, setWatchedMovies } = useMovieStore();
+  const { fetchWatchedMovies } = useMovies();
+
+  useEffect(() => {
+    const updateWatchedMovies = async () => {
+      const fetchedMovies = await fetchWatchedMovies();
+      setWatchedMovies(fetchedMovies ? fetchedMovies : []);
+    };
+    updateWatchedMovies();
+  }, []);
+
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={[styles.container]}>
       <CustomText type={"lTitle"} bold>
         Watched
       </CustomText>
-    </View>
+      <View style={{ gap: 8 }}>
+        {watchedMovies.map((movie, index) => (
+          <MovieItem movie={movie} key={index} />
+        ))}
+      </View>
+    </ScrollView>
   );
 }
 
