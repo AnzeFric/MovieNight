@@ -52,7 +52,9 @@ export default function WatchListScreen() {
   };
 
   const deleteActionBar = async () => {
-    const updatedMovies = await deleteMovies(selectedMovies);
+    const fetchWatched = false;
+    const updatedMovies = await deleteMovies(selectedMovies, fetchWatched);
+
     setWatchlistMovies(updatedMovies ? updatedMovies : []);
     setSelectedMovies([]);
     setShowActionBar(false);

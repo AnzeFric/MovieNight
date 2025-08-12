@@ -44,14 +44,19 @@ export function useMovies() {
     }
   };
 
-  const deleteMovies = async (moviesUuid: Array<string>) => {
+  const deleteMovies = async (
+    moviesUuid: Array<string>,
+    fetchWatched: boolean
+  ) => {
     try {
       await Promise.all(
         moviesUuid.map(async (uuid) => {
           await MovieService.deleteMovie(uuid);
         })
       );
-      const movies = await fetchWatchlistMovies();
+      const movies = fetchWatched
+        ? await fetchWatchedMovies()
+        : await fetchWatchlistMovies();
 
       return movies;
     } catch (error) {
