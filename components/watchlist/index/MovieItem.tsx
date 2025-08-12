@@ -51,7 +51,8 @@ export default function MovieItem({
             flexWrap: "wrap",
           }}
         >
-          {movie.name} {formatReleaseYear(movie.year)}
+          {movie.name}
+          {formatReleaseYear(movie.year)}
         </CustomText>
         <CustomText type={"small"}>{movie.picker}</CustomText>
         <CustomText type={"small"}>{formatLength(movie.length)}</CustomText>

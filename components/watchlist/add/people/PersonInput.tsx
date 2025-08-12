@@ -1,5 +1,6 @@
 import { Colors } from "@/constants/Colors";
 import { Person } from "@/interfaces/movie";
+import { useFocusEffect } from "expo-router";
 import {
   Dispatch,
   SetStateAction,
@@ -18,7 +19,7 @@ export default function PersonInput({ person, setPerson }: Props) {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
 
-  useCallback(() => {
+  useEffect(() => {
     const updatedPerson: Person = {
       firstname: firstname,
       lastname: lastname,
@@ -32,6 +33,15 @@ export default function PersonInput({ person, setPerson }: Props) {
       setLastname(person.lastname);
     }
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        setFirstname("");
+        setLastname("");
+      };
+    }, [])
+  );
 
   return (
     <View style={styles.container}>
