@@ -61,6 +61,10 @@ export default function WatchListScreen() {
   const watchedActionBar = async () => {
     const watchedMovies = await setMoviesToWatched(selectedMovies);
     setWatchedMovies(watchedMovies ? watchedMovies : []);
+
+    const updatedMovies = await fetchWatchlistMovies();
+    setWatchlistMovies(updatedMovies ? updatedMovies : []);
+
     setSelectedMovies([]);
     setShowActionBar(false);
   };

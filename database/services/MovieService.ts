@@ -79,23 +79,23 @@ export class MovieService {
 
   static async deleteMovie(movieUuid: string): Promise<void> {
     await database.write(async () => {
-      const movies = await database
+      const movie = await database
         .get<Movie>("movies")
         .query(Q.where("uuid", movieUuid))
         .fetch();
 
-      await movies[0].destroyPermanently();
+      await movie[0].destroyPermanently();
     });
   }
 
   static async setWatched(movieUuid: string): Promise<void> {
     await database.write(async () => {
-      const movies = await database
+      const movie = await database
         .get<Movie>("movies")
         .query(Q.where("uuid", movieUuid))
         .fetch();
 
-      await movies[0].update((movie) => {
+      await movie[0].update((movie) => {
         movie.watched = true;
       });
     });

@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 
 export default function WatchedScreen() {
-  const { watchedMovies, setWatchedMovies } = useMovieStore();
+  const { watchedMovies, watchlistMovies, setWatchedMovies } = useMovieStore();
   const { fetchWatchedMovies } = useMovies();
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export default function WatchedScreen() {
       setWatchedMovies(fetchedMovies ? fetchedMovies : []);
     };
     updateWatchedMovies();
-  }, []);
+  }, [watchlistMovies]);
 
   return (
     <ScrollView contentContainerStyle={[styles.container]}>
