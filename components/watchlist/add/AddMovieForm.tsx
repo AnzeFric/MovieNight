@@ -19,7 +19,7 @@ import PersonInput from "./people/PersonInput";
 
 export default function AddMovieForm() {
   const { createMovie } = useMovies();
-  const { setMovies } = useMovieStore();
+  const { setWatchlistMovies } = useMovieStore();
 
   const [name, setName] = useState("");
   const [lengthHours, setLengthHours] = useState("");
@@ -62,7 +62,7 @@ export default function AddMovieForm() {
     };
 
     const updatedMovies = await createMovie(newMovie);
-    setMovies(updatedMovies ? updatedMovies : []);
+    setWatchlistMovies(updatedMovies ? updatedMovies : []);
 
     router.back();
   };

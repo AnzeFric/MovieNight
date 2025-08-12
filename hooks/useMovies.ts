@@ -3,15 +3,28 @@ import { MovieInfo } from "@/interfaces/movie";
 import { Alert } from "react-native";
 
 export function useMovies() {
-  const fetchMovies = async () => {
+  const fetchWatchedMovies = async () => {
     try {
-      const movies = await MovieService.fetchMovies();
+      const movies = await MovieService.fetchWatchedMovies();
       return movies;
     } catch (error) {
-      console.error("Error while fetching data: ", error);
+      console.error("Error while fetching watched data: ", error);
       Alert.alert(
         "Error",
-        "An error occured while fetching data. Try again later."
+        "An error occured while fetching watched data. Try again later."
+      );
+    }
+  };
+
+  const fetchWatchlistMovies = async () => {
+    try {
+      const movies = await MovieService.fetchWatchlistMovies();
+      return movies;
+    } catch (error) {
+      console.error("Error while fetching watchlist data: ", error);
+      Alert.alert(
+        "Error",
+        "An error occured while fetching watchlist data. Try again later."
       );
     }
   };
@@ -19,7 +32,7 @@ export function useMovies() {
   const createMovie = async (movieData: MovieInfo) => {
     try {
       await MovieService.createMovie(movieData);
-      const movies = await fetchMovies();
+      const movies = await fetchWatchlistMovies();
 
       return movies;
     } catch (error) {
@@ -38,7 +51,7 @@ export function useMovies() {
           await MovieService.deleteMovie(uuid);
         })
       );
-      const movies = await fetchMovies();
+      const movies = await fetchWatchlistMovies();
 
       return movies;
     } catch (error) {
@@ -51,7 +64,8 @@ export function useMovies() {
   };
 
   return {
-    fetchMovies,
+    fetchWatchlistMovies,
+    fetchWatchedMovies,
     createMovie,
     deleteMovies,
   };

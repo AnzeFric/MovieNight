@@ -17,8 +17,8 @@ import {
 
 // TODO: Filtriranje in search bar
 export default function WatchListScreen() {
-  const { fetchMovies, deleteMovies } = useMovies();
-  const { movies, setMovies } = useMovieStore();
+  const { fetchWatchlistMovies, deleteMovies } = useMovies();
+  const { watchlistMovies, setWatchlistMovies } = useMovieStore();
 
   const [showActionBar, setShowActionBar] = useState(false);
   const [selectedMovies, setSelectedMovies] = useState<Array<string>>([]);
@@ -52,7 +52,7 @@ export default function WatchListScreen() {
   const deleteActionBar = async () => {
     const updatedMovies = await deleteMovies(selectedMovies);
     if (updatedMovies) {
-      setMovies(updatedMovies);
+      setWatchlistMovies(updatedMovies);
     }
     setSelectedMovies([]);
     setShowActionBar(false);
@@ -60,8 +60,8 @@ export default function WatchListScreen() {
 
   useEffect(() => {
     const inititializeMovies = async () => {
-      const fetchedMovies = await fetchMovies();
-      setMovies(fetchedMovies ? fetchedMovies : []);
+      const fetchedMovies = await fetchWatchlistMovies();
+      setWatchlistMovies(fetchedMovies ? fetchedMovies : []);
     };
     inititializeMovies();
   }, []);
@@ -122,7 +122,7 @@ export default function WatchListScreen() {
           Watchlist
         </CustomText>
         <View style={{ gap: 8 }}>
-          {movies.map((movie, index) => (
+          {watchlistMovies.map((movie, index) => (
             <MovieItem
               movie={movie}
               showActionBar={showActionBar}

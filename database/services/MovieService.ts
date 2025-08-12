@@ -23,8 +23,38 @@ export class MovieService {
     });
   }
 
-  static async fetchMovies(): Promise<Array<MovieInfo>> {
-    const movieRecords = await database.get<Movie>("movies").query().fetch();
+  static async fetchWatchedMovies(): Promise<Array<MovieInfo>> {
+    const movieRecords = await database
+      .get<Movie>("movies")
+      .query(Q.where("watched", true))
+      .fetch();
+
+    const movieData: Array<MovieInfo> = await Promise.all(
+      movieRecords.map(async (movieRecord) => {
+        const movie: MovieInfo = {
+          uuid: movieRecord.uuid,
+          name: movieRecord.name,
+          length: movieRecord.length,
+          rating: movieRecord.rating,
+          year: movieRecord.year,
+          genres: movieRecord.genres,
+          director: movieRecord.director,
+          description: movieRecord.description,
+          picker: movieRecord.picker,
+          watched: movieRecord.watched,
+        };
+        return movie;
+      })
+    );
+
+    return movieData;
+  }
+
+  static async fetchWatchlistMovies(): Promise<Array<MovieInfo>> {
+    const movieRecords = await database
+      .get<Movie>("movies")
+      .query(Q.where("watched", false))
+      .fetch();
 
     const movieData: Array<MovieInfo> = await Promise.all(
       movieRecords.map(async (movieRecord) => {
