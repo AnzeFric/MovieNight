@@ -15,6 +15,7 @@ export default appSchema({
         { name: "director", type: "string", isOptional: true },
         { name: "description", type: "string", isOptional: true },
         { name: "picker", type: "string" },
+        { name: "watched", type: "boolean" },
       ],
     }),
   ],
