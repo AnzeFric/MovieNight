@@ -25,10 +25,6 @@ export default function ModalPrompt({
     onClose();
   };
 
-  const handleCancel = () => {
-    onClose();
-  };
-
   return (
     <Modal
       transparent={true}
@@ -44,7 +40,7 @@ export default function ModalPrompt({
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={[styles.button, styles.cancelButton]}
-              onPress={handleCancel}
+              onPress={onClose}
             >
               <CustomText type={"small"}>{cancelText}</CustomText>
             </TouchableOpacity>
