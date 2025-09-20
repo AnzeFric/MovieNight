@@ -4,7 +4,7 @@ import { Colors } from "@/constants/Colors";
 import { MovieInfo } from "@/interfaces/movie";
 import useMovieStore from "@/stores/useMovieStore";
 import { Ionicons } from "@expo/vector-icons";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Swiper from "react-native-deck-swiper";
 
@@ -15,7 +15,12 @@ export default function DiscoverScreen() {
 
   const swiperRef = useRef<Swiper<MovieInfo>>(null);
 
+  useEffect(() => {
+    if (watchlistMovies.length < 1) setEmptyList(true);
+  }, [watchlistMovies]);
+
   const resetList = () => {
+    if (watchlistMovies.length < 1) return;
     setEmptyList(false);
   };
 
@@ -32,6 +37,7 @@ export default function DiscoverScreen() {
           onPress={resetList}
         />
       </View>
+
       <View style={styles.contentContainer}>
         {!emptyList ? (
           <Swiper

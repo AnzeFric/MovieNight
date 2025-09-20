@@ -10,20 +10,27 @@ interface Props {
 export default function SwiperCard({ movie }: Props) {
   return (
     <View style={styles.container}>
-      <CustomText type="lTitle" bold>
-        {movie.name}
-      </CustomText>
-
+      {movie?.name ? (
+        <CustomText type="lTitle" bold>
+          {movie?.name}
+        </CustomText>
+      ) : (
+        <CustomText type={"small"}>Not provided</CustomText>
+      )}
       <View style={styles.contentContainer}>
-        {movie.year && (
+        {movie?.year ? (
           <CustomText type={"small"}>Release year: {movie.year}</CustomText>
+        ) : (
+          <CustomText type={"small"}>Not provided</CustomText>
         )}
-        {movie.picker && (
+        {movie?.picker ? (
           <CustomText type={"small"}>Picked by: {movie.picker}</CustomText>
+        ) : (
+          <CustomText type={"small"}>Not provided</CustomText>
         )}
         <View>
           <CustomText type={"small"}>Description:</CustomText>
-          {movie.description ? (
+          {movie?.description ? (
             <CustomText type={"small"}>{movie.description}</CustomText>
           ) : (
             <CustomText type={"small"}>Not provided</CustomText>
