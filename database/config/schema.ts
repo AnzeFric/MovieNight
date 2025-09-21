@@ -1,7 +1,7 @@
 import { appSchema, tableSchema } from "@nozbe/watermelondb";
 
 export default appSchema({
-  version: 1,
+  version: 2,
   tables: [
     tableSchema({
       name: "movies",
@@ -15,7 +15,7 @@ export default appSchema({
         { name: "director", type: "string", isOptional: true },
         { name: "description", type: "string", isOptional: true },
         { name: "picker", type: "string" },
-        { name: "watched", type: "boolean" },
+        { name: "watchedDate", type: "string", isOptional: true },
       ],
     }),
   ],

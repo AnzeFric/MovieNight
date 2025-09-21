@@ -64,6 +64,12 @@ export default function MovieItem({
             </View>
           ))}
         </View>
+
+        {movie.watchedDate && (
+          <CustomText type={"small"}>
+            Watched date: {movie.watchedDate.toLocaleString()}
+          </CustomText>
+        )}
       </View>
     </TouchableOpacity>
   );

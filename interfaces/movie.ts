@@ -8,7 +8,7 @@ export interface MovieInfo {
   director: Person | null;
   description: string | null;
   picker: string; // Who chose the movie
-  watched: boolean;
+  watchedDate: Date | null;
 }
 
 export interface Person {

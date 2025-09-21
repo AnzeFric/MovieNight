@@ -6,6 +6,7 @@ export function useMovies() {
   const fetchWatchedMovies = async () => {
     try {
       const movies = await MovieService.fetchWatchedMovies();
+
       return movies;
     } catch (error) {
       console.error("Error while fetching watched data: ", error);

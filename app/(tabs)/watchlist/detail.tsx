@@ -21,6 +21,7 @@ export default function DetailMovie() {
     "Description",
     "Picked",
     "Director",
+    "Watched date",
   ];
 
   const sectionData = [
@@ -30,6 +31,9 @@ export default function DetailMovie() {
     movieData.description ? movieData.description : "Not provided",
     movieData.picker,
     movieData.director ? formatPerson(movieData.director) : "Not provided",
+    movieData.watchedDate
+      ? new Date(movieData.watchedDate).toLocaleString()
+      : "/",
   ];
 
   return (

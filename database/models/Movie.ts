@@ -18,5 +18,5 @@ export default class Movie extends Model {
 
   @field("description") description!: string | null;
   @field("picker") picker!: string;
-  @field("watched") watched!: boolean;
+  @field("watchedDate") watchedDate!: string | null;
 }

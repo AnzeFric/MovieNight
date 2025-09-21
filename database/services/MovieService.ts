@@ -4,8 +4,8 @@ import { Q } from "@nozbe/watermelondb";
 import Movie from "../models/Movie";
 
 export class MovieService {
-  static async createMovie(movieData: MovieInfo): Promise<MovieInfo> {
-    return await database.write(async () => {
+  static async createMovie(movieData: MovieInfo): Promise<void> {
+    await database.write(async () => {
       const movie = await database.get<Movie>("movies").create((movie) => {
         movie.uuid = movieData.uuid;
         movie.name = movieData.name;
@@ -16,7 +16,9 @@ export class MovieService {
         movie.director = movieData.director;
         movie.description = movieData.description;
         movie.picker = movieData.picker;
-        movie.watched = movieData.watched;
+        movie.watchedDate = movieData.watchedDate
+          ? movieData.watchedDate.toISOString()
+          : null;
       });
 
       return movie;
@@ -26,7 +28,7 @@ export class MovieService {
   static async fetchWatchedMovies(): Promise<Array<MovieInfo>> {
     const movieRecords = await database
       .get<Movie>("movies")
-      .query(Q.where("watched", true))
+      .query(Q.where("watchedDate", Q.notEq(null)))
       .fetch();
 
     const movieData: Array<MovieInfo> = await Promise.all(
@@ -41,7 +43,9 @@ export class MovieService {
           director: movieRecord.director,
           description: movieRecord.description,
           picker: movieRecord.picker,
-          watched: movieRecord.watched,
+          watchedDate: movieRecord.watchedDate
+            ? new Date(movieRecord.watchedDate)
+            : null,
         };
         return movie;
       })
@@ -53,7 +57,7 @@ export class MovieService {
   static async fetchWatchlistMovies(): Promise<Array<MovieInfo>> {
     const movieRecords = await database
       .get<Movie>("movies")
-      .query(Q.where("watched", false))
+      .query(Q.where("watchedDate", Q.eq(null)))
       .fetch();
 
     const movieData: Array<MovieInfo> = await Promise.all(
@@ -68,7 +72,9 @@ export class MovieService {
           director: movieRecord.director,
           description: movieRecord.description,
           picker: movieRecord.picker,
-          watched: movieRecord.watched,
+          watchedDate: movieRecord.watchedDate
+            ? new Date(movieRecord.watchedDate)
+            : null,
         };
         return movie;
       })
@@ -96,7 +102,7 @@ export class MovieService {
         .fetch();
 
       await movie[0].update((movie) => {
-        movie.watched = true;
+        movie.watchedDate = new Date().toISOString();
       });
     });
   }
