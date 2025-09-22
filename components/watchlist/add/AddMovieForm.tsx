@@ -52,7 +52,7 @@ export default function AddMovieForm() {
       uuid: uuid.v4(),
       name: name,
       length: parseInt(lengthHours) * 60 + parseInt(lengthMinutes),
-      rating: 0,
+      rating: null,
       year: parseInt(year),
       genres: genres,
       director: director,

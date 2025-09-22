@@ -1,8 +1,10 @@
 import CustomText from "@/components/global/CustomText";
 import PlusButton from "@/components/global/PlusButton";
+import ModalSetRating from "@/components/watched/ModalSetRating";
 import MovieItem from "@/components/watchlist/index/MovieItem";
 import { Colors } from "@/constants/Colors";
 import { useMovies } from "@/hooks/useMovies";
+import { MovieInfo } from "@/interfaces/movie";
 import useMovieStore from "@/stores/useMovieStore";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -15,7 +17,6 @@ import {
   View,
 } from "react-native";
 
-// TODO: Filtriranje in search bar
 export default function WatchListScreen() {
   const { fetchWatchlistMovies, deleteMovies, setMoviesToWatched } =
     useMovies();
@@ -24,6 +25,9 @@ export default function WatchListScreen() {
 
   const [showActionBar, setShowActionBar] = useState(false);
   const [selectedMovies, setSelectedMovies] = useState<Array<string>>([]);
+
+  const [modalRating, setModalRating] = useState(false);
+  const [moviesToRate, setMoviesToRate] = useState<Array<MovieInfo>>([]);
 
   const actionBarTranslateY = useRef(new Animated.Value(100)).current;
   const actionBarOpacity = useRef(new Animated.Value(0)).current;
@@ -61,14 +65,30 @@ export default function WatchListScreen() {
   };
 
   const watchedActionBar = async () => {
-    const watchedMovies = await setMoviesToWatched(selectedMovies);
+    setModalRating(true);
+
+    const movies = watchlistMovies.filter((movie) =>
+      selectedMovies.includes(movie.uuid)
+    );
+    setMoviesToRate(movies);
+  };
+
+  const confirmRatingModal = async (
+    movieUuidRatings: Array<[string, number]>
+  ) => {
+    const watchedMovies = await setMoviesToWatched(movieUuidRatings);
     setWatchedMovies(watchedMovies ? watchedMovies : []);
 
     const updatedMovies = await fetchWatchlistMovies();
     setWatchlistMovies(updatedMovies ? updatedMovies : []);
 
+    cancelRatingModal();
+  };
+
+  const cancelRatingModal = () => {
     setSelectedMovies([]);
     setShowActionBar(false);
+    setModalRating(false);
   };
 
   useEffect(() => {
@@ -189,6 +209,13 @@ export default function WatchListScreen() {
           <CustomText type="small">Cancel</CustomText>
         </TouchableOpacity>
       </Animated.View>
+
+      <ModalSetRating
+        visible={modalRating}
+        movies={moviesToRate}
+        onClose={cancelRatingModal}
+        onConfirm={confirmRatingModal}
+      />
     </>
   );
 }

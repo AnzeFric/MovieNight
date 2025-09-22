@@ -69,11 +69,11 @@ export function useMovies() {
     }
   };
 
-  const setMoviesToWatched = async (moviesUuid: Array<string>) => {
+  const setMoviesToWatched = async (movieRatings: Array<[string, number]>) => {
     try {
       await Promise.all(
-        moviesUuid.map(async (uuid) => {
-          await MovieService.setWatched(uuid);
+        movieRatings.map(async ([uuid, rating]) => {
+          await MovieService.setWatched(uuid, rating);
         })
       );
       const movies = await fetchWatchlistMovies();

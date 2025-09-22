@@ -5,6 +5,7 @@ import { MovieInfo } from "@/interfaces/movie";
 import Checkbox from "expo-checkbox";
 import { router } from "expo-router";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { StarRatingDisplay } from "react-native-star-rating-widget";
 
 interface Props {
   movie: MovieInfo;
@@ -43,7 +44,8 @@ export default function MovieItem({
       {showActionBar && (
         <Checkbox color={Colors.dark.specialBlue} value={selected} />
       )}
-      <View>
+
+      <View style={{ flex: 1 }}>
         <CustomText
           type={"normal"}
           bold
@@ -54,6 +56,16 @@ export default function MovieItem({
           {movie.name}
           {formatReleaseYear(movie.year)}
         </CustomText>
+
+        {movie.rating != null && (
+          <View style={styles.ratingContainer}>
+            <CustomText type={"small"} style={{ textAlign: "right" }}>
+              {movie.rating}
+            </CustomText>
+            <StarRatingDisplay rating={1} maxStars={1} />
+          </View>
+        )}
+
         <CustomText type={"small"}>{movie.picker}</CustomText>
         <CustomText type={"small"}>{formatLength(movie.length)}</CustomText>
 
@@ -78,8 +90,7 @@ export default function MovieItem({
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 10,
-    paddingStart: 15,
-    paddingEnd: 35,
+    paddingHorizontal: 15,
     borderRadius: 6,
     borderColor: Colors.dark.border,
     borderWidth: 0.5,
@@ -87,6 +98,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 20,
+  },
+  ratingContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
   },
   genreContainer: {
     flexDirection: "row",

@@ -94,7 +94,7 @@ export class MovieService {
     });
   }
 
-  static async setWatched(movieUuid: string): Promise<void> {
+  static async setWatched(movieUuid: string, rating: number): Promise<void> {
     await database.write(async () => {
       const movie = await database
         .get<Movie>("movies")
@@ -103,6 +103,7 @@ export class MovieService {
 
       await movie[0].update((movie) => {
         movie.watchedDate = new Date().toISOString();
+        movie.rating = rating;
       });
     });
   }
