@@ -1,5 +1,6 @@
 import CustomText from "@/components/global/CustomText";
 import PlusButton from "@/components/global/PlusButton";
+import SearchBar from "@/components/global/SearchBar";
 import ModalSetRating from "@/components/watched/ModalSetRating";
 import MovieItem from "@/components/watchlist/index/MovieItem";
 import { Colors } from "@/constants/Colors";
@@ -154,6 +155,7 @@ export default function WatchListScreen() {
         <CustomText type={"lTitle"} bold>
           Watchlist
         </CustomText>
+        <SearchBar />
         <View style={{ gap: 8 }}>
           {watchlistMovies.map((movie, index) => (
             <MovieItem

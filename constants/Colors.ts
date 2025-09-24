@@ -39,9 +39,13 @@ export const Colors = {
     iconWithDarkBackground: "#FFFFFF",
 
     /* Inputs */
-    inputBackground: "#F8F8F8",
-    inputBorder: "#DDDDDD",
-    inputText: "#000000",
+    inputDarkBackground: "#6A6A6A",
+    inputDarkBorder: "#404040",
+    inputDarkText: "#FFFFFF",
+
+    inputLightBackground: "#F8F8F8",
+    inputLightBorder: "#DDDDDD",
+    inputLightText: "#000000",
 
     /* Borders */
     border: "#000000",
@@ -96,9 +100,13 @@ export const Colors = {
     iconWithDarkBackground: "#FFFFFF",
 
     /* Inputs */
-    inputBackground: "#6A6A6A",
-    inputBorder: "#404040",
-    inputText: "#FFFFFF",
+    inputDarkBackground: "#6A6A6A",
+    inputDarkBorder: "#404040",
+    inputDarkText: "#FFFFFF",
+
+    inputLightBackground: "#F8F8F8",
+    inputLightBorder: "#DDDDDD",
+    inputLightText: "#000000",
 
     /* Borders */
     border: "#B8B8B8",

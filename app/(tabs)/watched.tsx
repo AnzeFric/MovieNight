@@ -1,5 +1,6 @@
 import CustomText from "@/components/global/CustomText";
 import ModalPrompt from "@/components/global/ModalPrompt";
+import SearchBar from "@/components/global/SearchBar";
 import MovieItem from "@/components/watchlist/index/MovieItem";
 import { useMovies } from "@/hooks/useMovies";
 import useMovieStore from "@/stores/useMovieStore";
@@ -41,6 +42,7 @@ export default function WatchedScreen() {
         <CustomText type={"lTitle"} bold>
           Watched
         </CustomText>
+        <SearchBar />
         <View style={{ gap: 8 }}>
           {watchedMovies.map((movie, index) => (
             <MovieItem
