@@ -1,60 +1,43 @@
 import { Colors } from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
 import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 
-export default function SearchBar() {
-  const [searchText, setSearchText] = useState("");
+interface Props {
+  searchText: string;
+  setSearchText: (searchText: string) => void;
+}
 
-  const handleSearch = () => {};
-
-  const handleFilter = () => {};
-
+export default function SearchBar({ searchText, setSearchText }: Props) {
   const handleChangeText = (text: string) => {
     setSearchText(text);
   };
 
   return (
     <View style={styles.container}>
-      <View style={styles.searchContainer}>
-        <TouchableOpacity onPress={handleSearch} style={styles.searchIcon}>
-          <Ionicons name={"search-outline"} size={20} color={"#666666"} />
-        </TouchableOpacity>
-        <TextInput
-          style={styles.textInput}
-          placeholder={"Search"}
-          placeholderTextColor={"#999999"}
-          value={searchText}
-          onChangeText={handleChangeText}
-          onSubmitEditing={handleSearch}
-        />
-        {searchText.length > 0 && (
-          <TouchableOpacity
-            onPress={() => setSearchText("")}
-            style={styles.clearIcon}
-          >
-            <Ionicons name={"close-circle"} size={24} color={"#666666"} />
-          </TouchableOpacity>
-        )}
-      </View>
-      <TouchableOpacity onPress={handleFilter}>
-        <Ionicons
-          name={"funnel-outline"}
-          size={30}
-          color={"#d9d9d9"}
-          style={styles.filterIcon}
-        />
+      <TouchableOpacity style={styles.searchIcon}>
+        <Ionicons name={"search-outline"} size={20} color={"#666666"} />
       </TouchableOpacity>
+      <TextInput
+        style={styles.textInput}
+        placeholder={"Search"}
+        placeholderTextColor={"#999999"}
+        value={searchText}
+        onChangeText={handleChangeText}
+      />
+      {searchText.length > 0 && (
+        <TouchableOpacity
+          onPress={() => setSearchText("")}
+          style={styles.clearIcon}
+        >
+          <Ionicons name={"close-circle"} size={24} color={"#666666"} />
+        </TouchableOpacity>
+      )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  searchContainer: {
     flex: 1,
     flexDirection: "row",
     alignItems: "center",

@@ -9,7 +9,7 @@ import { MovieInfo } from "@/interfaces/movie";
 import useMovieStore from "@/stores/useMovieStore";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Animated,
   ScrollView,
@@ -26,6 +26,7 @@ export default function WatchListScreen() {
 
   const [showActionBar, setShowActionBar] = useState(false);
   const [selectedMovies, setSelectedMovies] = useState<Array<string>>([]);
+  const [searchText, setSearchText] = useState("");
 
   const [modalRating, setModalRating] = useState(false);
   const [moviesToRate, setMoviesToRate] = useState<Array<MovieInfo>>([]);
@@ -144,6 +145,30 @@ export default function WatchListScreen() {
     }
   }, [showActionBar]);
 
+  const filteredData: Array<MovieInfo> = useMemo(() => {
+    if (searchText.trim() === "") return watchlistMovies;
+
+    return watchlistMovies.filter((movie) => {
+      const searchLower = searchText.toLowerCase();
+
+      const movieMatch =
+        movie.name.toLowerCase().includes(searchLower) ||
+        movie.length?.toString().includes(searchLower) ||
+        movie.year?.toString().includes(searchLower) ||
+        movie.description?.toLowerCase().includes(searchLower) ||
+        movie.picker?.toLowerCase().includes(searchLower) ||
+        movie.watchedDate?.toLocaleString().includes(searchLower) ||
+        movie.director?.firstname?.toLowerCase().includes(searchLower) ||
+        movie.director?.lastname?.toLowerCase().includes(searchLower);
+
+      const genreMatch = movie.genres?.some((genre) =>
+        genre.toLowerCase().includes(searchLower)
+      );
+
+      return movieMatch || genreMatch;
+    });
+  }, [watchlistMovies, searchText]);
+
   return (
     <>
       <ScrollView
@@ -155,9 +180,9 @@ export default function WatchListScreen() {
         <CustomText type={"lTitle"} bold>
           Watchlist
         </CustomText>
-        <SearchBar />
+        <SearchBar searchText={searchText} setSearchText={setSearchText} />
         <View style={{ gap: 8 }}>
-          {watchlistMovies.map((movie, index) => (
+          {filteredData.map((movie, index) => (
             <MovieItem
               movie={movie}
               showActionBar={showActionBar}
